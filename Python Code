@@ -1,0 +1,22 @@
+def joust(list_field: tuple, v_knight_left: int, v_knight_right: int) -> tuple:
+    length = len(list_field[0])
+    num_spaces = length-3
+    
+    if v_knight_left == 0 and v_knight_right == 0 or 2 >= num_spaces:
+        return list_field
+    
+    def recursion(left, v_left, right, v_right):
+        if left < right:
+            return recursion(left+v_left, v_left, right-v_right, v_right)
+        else:
+            return (left, right)
+
+    clash_location = recursion(2, v_knight_left, num_spaces, v_knight_right)
+    left_spaces = clash_location[0]-2
+    right_spaces = length-3-left_spaces
+    left_spaces2 = clash_location[1]
+    right_spaces2 = length - left_spaces2 - 3
+    left_res = ' '*left_spaces + '$->' + ' '*right_spaces
+    right_res = ' '*left_spaces2 + '<-P' + ' '*right_spaces2
+    
+    return (left_res, right_res)
